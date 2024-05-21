@@ -111,7 +111,7 @@ Additionally, for the release pipeline to be able to register an API with Azure 
 * `ENVIRONMENT` - a moniker of your choosing to describe what environment you are deploying to. Can be any value (e.g. `dev`). Used to construct resource group name.
 * `LOCATION` - must match names of regions Azure can understand, e.g. `westeurope`. Translated to a shorthand when constructing resource group name (e.g. `we`).
 * `PROJECT_NAME` - a moniker of your choosing to denote the project. Used to construct resource group name.
-* `SQL_ADMIN_USER` - administrator username of your choosing.
+* `SQL_ADMIN_USERNAME` - administrator username of your choosing.
 * `SQL_ADMIN_PASSWORD` - administrator password of your choosing.
 * `SQL_USERS_GROUP_NAME` - group of users allowed to access the database.
 * `SUBSCRIPTION` - Azure subscription identifier.
