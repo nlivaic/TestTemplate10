@@ -84,7 +84,7 @@ function Test-Password() {
     return $false;
 }
 
-function New-Password() {
+function NewPassword() {
     Param(
         [int] $Length,
         [ValidateSet('LatinAlphaUpperCase', 'LatinAlphaLowerCase', 'Digits', 'Hyphen', 'Underscore', 'Brackets', 'Special', 'Space')]
