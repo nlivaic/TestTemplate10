@@ -145,7 +145,7 @@ jobs:
             scriptType: pscore
             scriptLocation: 'scriptPath'
             scriptPath: './deployment/migrate.ps1'
-            arguments: '$(Pipeline.Workspace)/drop/TestTemplate10.Migrations/TestTemplate10.Migrations.dll "$(provisionResources.dbConnection)" "$(sqlEntraAuth.sqlAdminUserPrincipalName)" "$(SQL_ADMIN_PASSWORD)" $(Pipeline.Workspace)/drop/TestTemplate10.Migrations "$(SQL_USERS_GROUP_NAME)"'
+            arguments: '$(Pipeline.Workspace)/drop/TestTemplate10.Migrations/TestTemplate10.Migrations.dll "$(provisionResources.dbConnection)" "$(sqlEntraAuth.sqlAdminUserPrincipalName)" "$(passwordsGenerator.sqlEntraAdminPassword)" $(Pipeline.Workspace)/drop/TestTemplate10.Migrations "$(SQL_USERS_GROUP_NAME)"'
             powerShellErrorActionPreference: stop
 
         - task: AzureWebApp@1
