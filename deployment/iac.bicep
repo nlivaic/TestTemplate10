@@ -227,7 +227,6 @@ resource service_bus 'Microsoft.ServiceBus/namespaces@2021-06-01-preview' = {
 
 resource keyvault 'Microsoft.KeyVault/vaults@2023-07-01' = {
   name: keyvault_name
-  location: location
   properties: {
     sku: {
       family: 'A'
@@ -250,7 +249,6 @@ resource keyvault 'Microsoft.KeyVault/vaults@2023-07-01' = {
 resource keyvault_sql_admin_password 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
   parent: keyvault
   name: 'SQL_ADMIN_PASSWORD'
-  location: location
   properties: {
     attributes: {
       enabled: true
