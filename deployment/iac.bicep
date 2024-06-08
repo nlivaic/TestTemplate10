@@ -24,6 +24,7 @@ var web = 'web'
 var law = 'law'
 var ai = 'ai'
 var sb = 'sb'
+var kv = 'kv'
 
 var baseName = '${regionCode}${environment}${projectName}'
 
@@ -36,6 +37,7 @@ var app_insight_name = toLower('${baseName}${ai}1')
 var service_bus_name = toLower('${baseName}${sb}1')
 var service_bus_RootManageSharedAccessKey_name = 'RootManageSharedAccessKey'
 var service_bus_ReadWritePolicy_name = 'ReadWritePolicy'
+var keyvault_name = toLower('${baseName}${kv}1')
 
 var db_connection_string_env_var_name = 'TestTemplate10DbConnection'
 var auth_authority_env_var_name = 'AUTH__AUTHORITY'
@@ -218,6 +220,39 @@ resource service_bus 'Microsoft.ServiceBus/namespaces@2021-06-01-preview' = {
         'Listen'
         'Send'
       ]
+    }
+  }
+}
+
+resource keyvault 'Microsoft.KeyVault/vaults@2023-07-01' = {
+  name: keyvault_name
+  location: 'westeurope'
+  properties: {
+    sku: {
+      family: 'A'
+      name: 'standard'
+    }
+    tenantId: authAuthority
+    accessPolicies: []
+    enabledForDeployment: false
+    enabledForDiskEncryption: false
+    enabledForTemplateDeployment: false
+    enableSoftDelete: true
+    softDeleteRetentionInDays: 90
+    enableRbacAuthorization: true
+    vaultUri: 'https://${keyvault_name}.vault.azure.net/'
+    provisioningState: 'Succeeded'
+    publicNetworkAccess: 'Enabled'
+  }
+}
+
+resource keyvault_sql_admin_password 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
+  parent: keyvault
+  name: 'SQL_ADMIN_PASSWORD'
+  location: 'westeurope'
+  properties: {
+    attributes: {
+      enabled: true
     }
   }
 }
