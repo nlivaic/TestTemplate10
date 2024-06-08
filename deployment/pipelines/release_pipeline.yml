@@ -108,12 +108,23 @@ jobs:
             arguments: '$(provisionResourceGroup.resourceGroupName)'
             powerShellErrorActionPreference: stop
 
+        - task: AzureCLI@2
+          displayName: 'Provision Key Vault'
+          name: 'provisionKeyVault'
+          inputs:
+            azureSubscription: 'AzureConnection'
+            scriptType: pscore
+            scriptLocation: 'scriptPath'
+            scriptPath: './deployment/provisionKeyVault.ps1'
+            arguments: '$(ENVIRONMENT) $(PROJECT_NAME) $(provisionResourceGroup.resourceGroupName)'
+            powerShellErrorActionPreference: stop
+
         - task: PowerShell@2
-          displayName: 'Generate passwords'
-          name: 'passwordsGenerator'
+          displayName: 'Generate secrets'
+          name: 'secretGenerator'
           inputs:
             targetType: 'filePath'
-            filePath: './deployment/passwordGenerator.ps1'
+            filePath: './deployment/secretGenerator.ps1'
 
         - task: AzureCLI@2
           displayName: 'Provision Resources'
@@ -123,7 +134,7 @@ jobs:
             scriptType: pscore
             scriptLocation: 'scriptPath'
             scriptPath: './deployment/provisionResources.ps1'
-            arguments: '$(ENVIRONMENT) $(PROJECT_NAME) $(provisionResourceGroup.resourceGroupName) $(SQL_ADMIN_USERNAME) $(passwordsGenerator.sqlSaAdminPassword) $(entraApiRegistration.tenantId) $(entraApiRegistration.authAuthority) $(entraApiRegistration.authAudience) $(entraApiRegistration.authValidIssuer)'
+            arguments: '$(ENVIRONMENT) $(PROJECT_NAME) $(provisionResourceGroup.resourceGroupName) $(SQL_ADMIN_USERNAME) $(secretGenerator.sqlSaAdminPassword) $(entraApiRegistration.tenantId) $(entraApiRegistration.authAuthority) $(entraApiRegistration.authAudience) $(entraApiRegistration.authValidIssuer)'
             powerShellErrorActionPreference: stop
 
         - task: AzureCLI@2
@@ -134,7 +145,7 @@ jobs:
             scriptType: pscore
             scriptLocation: 'scriptPath'
             scriptPath: './deployment/sqlEntraAuth.ps1'
-            arguments: '$(SQL_ADMIN_USERNAME) $(passwordsGenerator.sqlEntraAdminPassword) $(SQL_USERS_GROUP_NAME) $(provisionResourceGroup.resourceGroupName) $(provisionResources.appServiceWebName) $(provisionResources.sqlServerName)'
+            arguments: '$(SQL_ADMIN_USERNAME) $(secretGenerator.sqlEntraAdminPassword) $(SQL_USERS_GROUP_NAME) $(provisionResourceGroup.resourceGroupName) $(provisionResources.appServiceWebName) $(provisionResources.sqlServerName)'
             powerShellErrorActionPreference: stop
             
         - task: AzureCLI@2
@@ -145,7 +156,7 @@ jobs:
             scriptType: pscore
             scriptLocation: 'scriptPath'
             scriptPath: './deployment/migrate.ps1'
-            arguments: '$(Pipeline.Workspace)/drop/TestTemplate10.Migrations/TestTemplate10.Migrations.dll "$(provisionResources.dbConnection)" "$(sqlEntraAuth.sqlAdminUserPrincipalName)" "$(passwordsGenerator.sqlEntraAdminPassword)" $(Pipeline.Workspace)/drop/TestTemplate10.Migrations "$(SQL_USERS_GROUP_NAME)"'
+            arguments: '$(Pipeline.Workspace)/drop/TestTemplate10.Migrations/TestTemplate10.Migrations.dll "$(provisionResources.dbConnection)" "$(sqlEntraAuth.sqlAdminUserPrincipalName)" "$(secretGenerator.sqlEntraAdminPassword)" $(Pipeline.Workspace)/drop/TestTemplate10.Migrations "$(SQL_USERS_GROUP_NAME)"'
             powerShellErrorActionPreference: stop
 
         - task: AzureWebApp@1

@@ -38,7 +38,7 @@ var app_insight_name = toLower('${baseName}${ai}1')
 var service_bus_name = toLower('${baseName}${sb}1')
 var service_bus_RootManageSharedAccessKey_name = 'RootManageSharedAccessKey'
 var service_bus_ReadWritePolicy_name = 'ReadWritePolicy'
-var keyvault_name = toLower('${baseName}${kv}2')
+var keyvault_name = toLower('${baseName}${kv}1')
 
 var db_connection_string_env_var_name = 'TestTemplate10DbConnection'
 var auth_authority_env_var_name = 'AUTH__AUTHORITY'
