@@ -123,7 +123,7 @@ jobs:
             scriptType: pscore
             scriptLocation: 'scriptPath'
             scriptPath: './deployment/provisionResources.ps1'
-            arguments: '$(ENVIRONMENT) $(PROJECT_NAME) $(provisionResourceGroup.resourceGroupName) $(SQL_ADMIN_USERNAME) $(passwordsGenerator.sqlSaAdminPassword) $(entraApiRegistration.authAuthority) $(entraApiRegistration.authAudience) $(entraApiRegistration.authValidIssuer)'
+            arguments: '$(ENVIRONMENT) $(PROJECT_NAME) $(provisionResourceGroup.resourceGroupName) $(SQL_ADMIN_USERNAME) $(passwordsGenerator.sqlSaAdminPassword) $(entraApiRegistration.tenantId) $(entraApiRegistration.authAuthority) $(entraApiRegistration.authAudience) $(entraApiRegistration.authValidIssuer)'
             powerShellErrorActionPreference: stop
 
         - task: AzureCLI@2
