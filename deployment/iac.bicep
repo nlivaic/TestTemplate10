@@ -227,6 +227,7 @@ resource service_bus 'Microsoft.ServiceBus/namespaces@2021-06-01-preview' = {
 
 resource keyvault 'Microsoft.KeyVault/vaults@2023-07-01' = {
   name: keyvault_name
+  location: location
   properties: {
     sku: {
       family: 'A'
