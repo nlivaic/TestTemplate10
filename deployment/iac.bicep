@@ -233,7 +233,7 @@ resource keyvault 'Microsoft.KeyVault/vaults@2023-07-01' = {
       family: 'A'
       name: 'standard'
     }
-    tenantId: authAuthority
+    tenantId: tenantId
     accessPolicies: []
     enabledForDeployment: false
     enabledForDiskEncryption: false
