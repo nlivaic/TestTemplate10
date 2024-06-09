@@ -118,7 +118,7 @@ jobs:
             scriptPath: './deployment/provisionKeyVault.ps1'
             arguments: '$(ENVIRONMENT) $(PROJECT_NAME) $(provisionResourceGroup.resourceGroupName)'
             powerShellErrorActionPreference: stop
-
+        
         - task: PowerShell@2
           displayName: 'Secrets'
           name: 'secrets'
