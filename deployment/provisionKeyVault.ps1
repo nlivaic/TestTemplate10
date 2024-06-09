@@ -16,9 +16,7 @@ Write-Host "##[warning]------ Create Key Vault END ------"
 ####################################################
 Write-Host "##[warning]------ Assign Key Vault Roles to AzureConnection START ------"
 $servicePrincipalId = az ad sp list --filter "appId eq '$env:servicePrincipalId'" --query '[].id' --output tsv
-# "Key Vault Secrets Officer" role
-echo "FOO FOO FOO FOO FOO FOO"
-echo $servicePrincipalId
-echo "FOO FOO FOO FOO FOO FOO"
-az role assignment create --assignee $servicePrincipalId --role "b86a8fe4-44ce-4948-aee5-eccb2c155cd7" --scope $rgId
+$keyVaultId = az keyvault show --name $keyVaultName --query id --output tsv
+# "Key Vault Secrets Officer" role, scoped to this key vault
+az role assignment create --assignee $servicePrincipalId --role "b86a8fe4-44ce-4948-aee5-eccb2c155cd7" --scope $keyVaultId
 Write-Host "##[warning]------ Assign Key Vault Roles to AzureConnection END ------"
