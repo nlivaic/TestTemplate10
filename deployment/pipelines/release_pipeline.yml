@@ -131,6 +131,14 @@ jobs:
             arguments: '$(provisionKeyVault.keyVaultName)'
             powerShellErrorActionPreference: stop
 
+        - task: AzureKeyVault@2
+          displayName: Azure Key Vault
+          inputs:
+            azureSubscription: 'AzureConnection'
+            KeyVaultName: '$(provisionKeyVault.keyVaultName)'
+            SecretsFilter: '*'
+            RunAsPreJob: false
+
         - task: AzureCLI@2
           displayName: 'Provision Resources'
           name: 'provisionResources'
