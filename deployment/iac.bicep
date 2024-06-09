@@ -4,7 +4,6 @@ param sql_admin_username string
 @secure()
 param sql_admin_password string
 param location string = resourceGroup().location
-param tenantId string
 param authAuthority string
 param authAudience string
 param authValidIssuer string

@@ -120,11 +120,13 @@ jobs:
             powerShellErrorActionPreference: stop
 
         - task: PowerShell@2
-          displayName: 'Generate secrets'
-          name: 'secretGenerator'
+          displayName: 'Secrets'
+          name: 'secrets'
           inputs:
             targetType: 'filePath'
-            filePath: './deployment/secretGenerator.ps1'
+            filePath: './deployment/secrets.ps1'
+            arguments: >
+              -keyVaultName $(provisionKeyVault.keyVaultName)
 
         - task: AzureCLI@2
           displayName: 'Provision Resources'
@@ -134,7 +136,7 @@ jobs:
             scriptType: pscore
             scriptLocation: 'scriptPath'
             scriptPath: './deployment/provisionResources.ps1'
-            arguments: '$(ENVIRONMENT) $(PROJECT_NAME) $(provisionResourceGroup.resourceGroupName) $(SQL_ADMIN_USERNAME) $(secretGenerator.sqlSaAdminPassword) $(entraApiRegistration.tenantId) $(entraApiRegistration.authAuthority) $(entraApiRegistration.authAudience) $(entraApiRegistration.authValidIssuer)'
+            arguments: '$(ENVIRONMENT) $(PROJECT_NAME) $(provisionResourceGroup.resourceGroupName) $(SQL_ADMIN_USERNAME) $(secrets.sqlSaAdminPassword) $(entraApiRegistration.tenantId) $(entraApiRegistration.authAuthority) $(entraApiRegistration.authAudience) $(entraApiRegistration.authValidIssuer)'
             powerShellErrorActionPreference: stop
 
         - task: AzureCLI@2
