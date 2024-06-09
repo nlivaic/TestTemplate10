@@ -118,6 +118,7 @@ jobs:
             scriptPath: './deployment/provisionKeyVault.ps1'
             arguments: '$(ENVIRONMENT) $(PROJECT_NAME) $(provisionResourceGroup.resourceGroupName)'
             powerShellErrorActionPreference: stop
+            addSpnToEnvironment: true
 
         - task: AzureCLI@2
           displayName: 'Secrets'
@@ -138,7 +139,7 @@ jobs:
             scriptType: pscore
             scriptLocation: 'scriptPath'
             scriptPath: './deployment/provisionResources.ps1'
-            arguments: '$(ENVIRONMENT) $(PROJECT_NAME) $(provisionResourceGroup.resourceGroupName) $(SQL_ADMIN_USERNAME) $(secrets.sqlSaAdminPassword) $(entraApiRegistration.tenantId) $(entraApiRegistration.authAuthority) $(entraApiRegistration.authAudience) $(entraApiRegistration.authValidIssuer)'
+            arguments: '$(ENVIRONMENT) $(PROJECT_NAME) $(provisionResourceGroup.resourceGroupName) $(SQL_ADMIN_USERNAME) $(secrets.sqlSaAdminPassword) $(entraApiRegistration.authAuthority) $(entraApiRegistration.authAudience) $(entraApiRegistration.authValidIssuer)'
             powerShellErrorActionPreference: stop
 
         - task: AzureCLI@2
