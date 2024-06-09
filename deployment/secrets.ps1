@@ -6,8 +6,8 @@ param ($keyVaultName)
 ################################################################
 ### Set Key Vault secrets to provided values.
 ################################################################
-$sqlSaPasswordSecretName = "SQL_SA_PASSWORD"
-$sqlAdminPasswordSecretName = "SQL_ADMIN_PASSWORD"
+$sqlSaPasswordSecretName = "SQL-SA-PASSWORD"
+$sqlAdminPasswordSecretName = "SQL-ADMIN-PASSWORD"
 
 # We have to check whether all the relevant secrets are in there.
 # If not, generate those secrets and store in Key Vault.
