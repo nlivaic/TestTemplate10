@@ -118,15 +118,17 @@ jobs:
             scriptPath: './deployment/provisionKeyVault.ps1'
             arguments: '$(ENVIRONMENT) $(PROJECT_NAME) $(provisionResourceGroup.resourceGroupName)'
             powerShellErrorActionPreference: stop
-        
-        - task: PowerShell@2
+
+        - task: AzureCLI@2
           displayName: 'Secrets'
           name: 'secrets'
           inputs:
-            targetType: 'filePath'
-            filePath: './deployment/secrets.ps1'
-            arguments: >
-              -keyVaultName $(provisionKeyVault.keyVaultName)
+            azureSubscription: 'AzureConnection'
+            scriptType: pscore
+            scriptLocation: 'scriptPath'
+            scriptPath: './deployment/secrets.ps1'
+            arguments: '$(provisionKeyVault.keyVaultName)'
+            powerShellErrorActionPreference: stop
 
         - task: AzureCLI@2
           displayName: 'Provision Resources'

@@ -1,12 +1,12 @@
 param ($keyVaultName)
 
 # Will expose method NewPassword
-. ./secretGenerator.ps1
+. $PSScriptRoot\secretGenerator.ps1
 
 ################################################################
 ### Set Key Vault secrets to provided values.
 ################################################################
-$secretName = "asadfads-asdadasdaaaaa"
+$secretName = "secretFromKeyVault"
 
 # We have to check whether all the relevant secrets are in there.
 # If not, generate those secrets and store in Key Vault.
@@ -17,9 +17,9 @@ if ($exists -eq "false") {
 }
 
 $sqlSaAdminPassword = NewPassword
-# $sqlEntraAdminPassword = NewPassword
-# 
+$sqlEntraAdminPassword = NewPassword
 Write-Host "sqlSaAdminPassword:: $sqlSaAdminPassword"
+
 Write-Host "sqlEntraAdminPassword:: $sqlEntraAdminPassword"
-# Write-Host "##vso[task.setvariable variable=sqlSaAdminPassword;isoutput=true]$sqlSaAdminPassword"
-# Write-Host "##vso[task.setvariable variable=sqlEntraAdminPassword;isoutput=true]$sqlEntraAdminPassword"
+Write-Host "##vso[task.setvariable variable=sqlSaAdminPassword;isoutput=true]$sqlSaAdminPassword"
+Write-Host "##vso[task.setvariable variable=sqlEntraAdminPassword;isoutput=true]$sqlEntraAdminPassword"
