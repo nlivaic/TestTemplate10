@@ -139,17 +139,6 @@ jobs:
             SecretsFilter: '*'
             RunAsPreJob: false
 
-        - task: CmdLine@2
-          displayName: From KV - exists
-          inputs:
-            script: 'echo $(SQL-SA-PASSWORD)'
-
-        - task: CmdLine@2
-          displayName: From KV - does not exist
-          inputs:
-            script: 'echo $(SQL-SA-PASSWORDaaaaaaaaaaaaaaa)'
-
-
         - task: AzureCLI@2
           displayName: 'Provision Resources'
           name: 'provisionResources'

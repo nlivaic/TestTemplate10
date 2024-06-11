@@ -17,6 +17,7 @@ namespace TestTemplate10.Core.Entities
         }
 
         public string Text { get; private set; }
+        public string Text1 { get; private set; }
 
         private static void Validate(string text)
         {
