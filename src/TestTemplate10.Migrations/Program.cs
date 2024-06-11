@@ -120,6 +120,7 @@ namespace TestTemplate10.Migrations
                     dbPassword = args[2];
                     scriptsPath = args[3];
                     sqlUsersGroupName = args[4];
+                    Console.WriteLine("FOO: " + dbPassword);
                 }
             }
         }
