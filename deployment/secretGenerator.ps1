@@ -137,11 +137,3 @@ function NewPassword() {
     }
     return $result;
 }
-
-$sqlSaAdminPassword = NewPassword
-$sqlEntraAdminPassword = NewPassword
-
-Write-Host "sqlSaAdminPassword:: $sqlSaAdminPassword"
-Write-Host "sqlEntraAdminPassword:: $sqlEntraAdminPassword"
-Write-Host "##vso[task.setvariable variable=sqlSaAdminPassword;isoutput=true]$sqlSaAdminPassword"
-Write-Host "##vso[task.setvariable variable=sqlEntraAdminPassword;isoutput=true]$sqlEntraAdminPassword"
