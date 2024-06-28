@@ -20,6 +20,7 @@ DB_ADMIN_PASSWORD=<db_admin_pw>
 AUTH__AUTHORITY=https://login.microsoftonline.com/<auth_tenant_id>/v2.0
 AUTH__AUDIENCE=<auth_audience>
 AUTH__VALID_ISSUER=https://sts.windows.net/<auth_tenant_id>/
+KeyVault__Uri=<keyvault_uri>
 "@
     Write-Host "Created new '.env' file."
 }
@@ -41,6 +42,8 @@ $applicationinsights_connection_string = Read-Host -Prompt 'Application Insights
 $auth_tenant_id = Read-Host -Prompt 'Azure AD Tenant Id'
 # Claim identifying this API
 $auth_audience = Read-Host -Prompt 'This APIs audience identifier'
+# Development environment Key Vault URI
+$keyvault_uri = Read-Host -Prompt 'Development environment Key Vault URI'
 
 (Get-Content ".env").replace("<db_admin_pw>", $db_admin_pw) | Set-Content ".env"
 (Get-Content ".env").replace("<db_user>", $db_user) | Set-Content ".env"
@@ -49,6 +52,7 @@ $auth_audience = Read-Host -Prompt 'This APIs audience identifier'
 (Get-Content ".env").replace("<applicationinsights_connection_string>", $applicationinsights_connection_string) | Set-Content ".env"
 (Get-Content ".env").replace("<auth_tenant_id>", $auth_tenant_id) | Set-Content ".env"
 (Get-Content ".env").replace("<auth_audience>", $auth_audience) | Set-Content ".env"
+(Get-Content ".env").replace("<keyvault_uri>", $keyvault_uri) | Set-Content ".env"
 
 # git init only on a new repo
 git rev-parse --is-inside-work-tree | Out-Null
