@@ -38,9 +38,12 @@ namespace TestTemplate10.Api
                 .ConfigureAppConfiguration((context, config) =>
                 {
                     var builtConfig = config.Build();
-                    config.AddAzureKeyVault(
-                        new Uri(builtConfig["SecretOptions:Uri"]),
-                        new DefaultAzureCredential());
+                    if (!string.IsNullOrEmpty(builtConfig["KeyVault:Uri"]))
+                    {
+                        config.AddAzureKeyVault(
+                            new Uri(builtConfig["KeyVault:Uri"]),
+                            new DefaultAzureCredential());
+                    }
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
