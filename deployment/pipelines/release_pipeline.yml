@@ -151,6 +151,17 @@ jobs:
             powerShellErrorActionPreference: stop
 
         - task: AzureCLI@2
+          displayName: 'Create MSI and User Group'
+          name: 'msiUserGroups'
+          inputs:
+            azureSubscription: 'AzureConnection'
+            scriptType: pscore
+            scriptLocation: 'scriptPath'
+            scriptPath: './deployment/msiUserGroups.ps1'
+            arguments: '$(SQL_USERS_GROUP_NAME) $(provisionResourceGroup.resourceGroupName) $(provisionResources.appServiceWebName)'
+            powerShellErrorActionPreference: stop
+
+        - task: AzureCLI@2
           displayName: 'Sql Entra Auth'
           name: 'sqlEntraAuth'
           inputs:
