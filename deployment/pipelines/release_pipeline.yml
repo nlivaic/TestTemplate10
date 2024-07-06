@@ -169,7 +169,7 @@ jobs:
             scriptType: pscore
             scriptLocation: 'scriptPath'
             scriptPath: './deployment/sqlEntraAuth.ps1'
-            arguments: '$(SQL_ADMIN_USERNAME) $(SQL-ADMIN-PASSWORD) $(SQL_USERS_GROUP_NAME) $(provisionResourceGroup.resourceGroupName) $(provisionResources.appServiceWebName) $(provisionResources.sqlServerName)'
+            arguments: '$(SQL_ADMIN_USERNAME) $(SQL-ADMIN-PASSWORD) $(provisionResourceGroup.resourceGroupName) $(provisionResources.sqlServerName)'
             powerShellErrorActionPreference: stop
             
         - task: AzureCLI@2

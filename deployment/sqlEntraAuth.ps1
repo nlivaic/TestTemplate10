@@ -5,14 +5,14 @@ $domain = (az rest --method get --url 'https://graph.microsoft.com/v1.0/domains?
 ####################################################
 ### Create and Populate Azure Sql Admin
 ####################################################
-Write-Host "##[warning]--- Create and Populate Azure Sql Admin Group - START ---"
+Write-Host "##[warning]--- Create and Populate Azure Sql Admin - START ---"
 $sqlAdminUserPrincipalName = $sqlAdminUserName + '@' + $domain
 $sqlAdminUserId = (az ad user list --filter "userPrincipalName eq '$sqlAdminUserPrincipalName'" --query '[].id' --output tsv)
 If ($sqlAdminUserId -eq $null) {
     $sqlAdminUserId = (az ad user create --display-name $sqlAdminUserName --password $sqlAdminUserPassword --user-principal-name $sqlAdminUserPrincipalName --query id --output tsv)
     Write-Host "##[section]Created Entra user '$sqlAdminUserPrincipalName' with user Id: $sqlAdminUserId"
 }
-Write-Host "##[warning]--- Create and Populate Azure Sql Admin Group - END ---"
+Write-Host "##[warning]--- Create and Populate Azure Sql Admin - END ---"
 
 ################################################################
 ### Assign Azure Sql Admin to relevant SQL Server roles
