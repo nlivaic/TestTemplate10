@@ -1,30 +1,34 @@
 using System;
 using System.Threading.Tasks;
 using AutoMapper;
-using Azure.Identity;
+using AutoMapper.Configuration;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TestTemplate10.Application.Questions.Commands;
 using TestTemplate10.Application.Questions.Queries;
+using TestTemplate10.Common.Interfaces;
 
 namespace TestTemplate10.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [AllowAnonymous]
     public class FoosController : ControllerBase
     {
         private readonly ISender _sender;
         private readonly IMapper _mapper;
+        private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration;
 
         public FoosController(
             ISender sender,
-            IMapper mapper)
+            IMapper mapper,
+            Microsoft.Extensions.Configuration.IConfiguration configuration
+            )
         {
             _sender = sender;
             _mapper = mapper;
+            _configuration = configuration;
         }
 
         /// <summary>
@@ -36,12 +40,7 @@ namespace TestTemplate10.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<string>> GetListAsync()
         {
-            var vaultUri = new Uri("https://wedevtesttemplate10bkv1.vault.azure.net/");
-            var credentials = new DefaultAzureCredential();
-            var secretClient = new Azure.Security.KeyVault.Secrets.SecretClient(
-                vaultUri: vaultUri,
-                credential: credentials);
-            var secret = secretClient.GetSecret("SQL-SA-PASSWORD");
+            var secret = _configuration["SQL-SA-PASSWORD"];
             return Ok(secret);
         }
 

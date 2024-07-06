@@ -12,6 +12,17 @@ If ($sqlUsersGroupId -eq $null) {
 Write-Host "##[warning]--- Create and Populate User Group - END ---"
 
 ####################################################
+### Assign roles to User Group
+####################################################
+Write-Host "##[warning]--- Assign roles to User Group - START ---"
+$rgId = az group show --resource-group $resourceGroupName --query id --output tsv
+# Scoped to resource group
+# Key Vault Secrets Officer role
+az role assignment create --assignee $sqlUsersGroupId --role "b86a8fe4-44ce-4948-aee5-eccb2c155cd7" --scope $rgId
+Write-Host "##[section]Added Entra group '$sqlUsersGroupId' to role 'Key Vault Secrets Officer'"
+Write-Host "##[warning]--- Assign roles to User Group - END ---"
+
+####################################################
 ### Create Managed Identity for Web API
 ####################################################
 Write-Host "##[warning]--- Create Managed Identity for Web API - START ---"
