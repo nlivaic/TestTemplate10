@@ -14,6 +14,7 @@ namespace TestTemplate10.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [AllowAnonymous]
     public class FoosController : ControllerBase
     {
         private readonly ISender _sender;
