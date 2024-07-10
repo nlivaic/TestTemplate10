@@ -7,6 +7,7 @@ param location string = resourceGroup().location
 param authAuthority string
 param authAudience string
 param authValidIssuer string
+param vault_uri string
 
 // Object containing a mapping for location / region code
 var regionCodes = {
@@ -43,6 +44,7 @@ var auth_audience_env_var_name = 'AUTH__AUDIENCE'
 var auth_valid_issuer_env_var_name = 'AUTH__VALID_ISSUER'
 var applicationinsights_connection_string_env_var_name = 'APPLICATIONINSIGHTS_CONNECTION_STRING'
 var messageBroker_connectionStrings_env_var_name = 'MessageBroker'
+var vault_uri_env_var_name = 'KeyVault__Uri'
 
 resource sqlserver 'Microsoft.Sql/servers@2022-11-01-preview' = {
   name: sqlserver_name
@@ -140,6 +142,10 @@ resource app_service_appsetting 'Microsoft.Web/sites/config@2022-09-01' = {
       {
         name: auth_valid_issuer_env_var_name
         value: authValidIssuer
+      }
+      {
+        name: vault_uri_env_var_name
+        value: vault_uri
       }
     ]
     numberOfWorkers: 1
