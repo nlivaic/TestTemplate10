@@ -42,16 +42,5 @@ If ($sqlServerAdmin -eq $null) {
 }
 Write-Host "##[warning]--- Set Sql Server Admin - END ---"
 
-####################################################
-### AAD only auth
-####################################################
-Write-Host "##[warning]--- AAD only auth - START ---"
-$isAdOnlyAuthEnabled = (az sql server ad-only-auth get --resource-group $resourceGroupName --name $sqlServerName --query azureAdOnlyAuthentication --output tsv)
-If ($isAdOnlyAuthEnabled -eq "false") {
-    az sql server ad-only-auth enable --resource-group $resourceGroupName --name $sqlServerName
-    Write-Host "##[section]Enabled Azure AD-only auth for Sql server '$sqlServerName'"
-}
-Write-Host "##[warning]--- AAD only auth - END ---"
-
-Write-Host "##[warning]--- Create Managed Identity for Web API - END ---"
+Write-Host "##[warning]--- Sql Entra Auth - END ---"
 Write-Host "##vso[task.setvariable variable=sqlAdminUserPrincipalName;isoutput=true]$sqlAdminUserPrincipalName"

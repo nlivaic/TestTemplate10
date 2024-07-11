@@ -171,6 +171,18 @@ jobs:
             scriptPath: './deployment/sqlEntraAuth.ps1'
             arguments: '$(SQL_ADMIN_USERNAME) $(SQL-ADMIN-PASSWORD) $(provisionResourceGroup.resourceGroupName) $(provisionResources.sqlServerName)'
             powerShellErrorActionPreference: stop
+
+        - task: AzureCLI@2
+          displayName: 'Sql Entra-Only Auth - Enable'
+          name: 'sqlEntraOnlyAuthEnable'
+          inputs:
+            azureSubscription: 'AzureConnection'
+            scriptType: pscore
+            scriptLocation: 'scriptPath'
+            scriptPath: './deployment/sqlEntraOnlyAuthEnable.ps1'
+            arguments: '$(provisionResourceGroup.resourceGroupName)'
+            powerShellErrorActionPreference: stop
+          condition: always()
             
         - task: AzureCLI@2
           displayName: 'Migrate database'
