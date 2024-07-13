@@ -38,10 +38,10 @@ namespace TestTemplate10.Api.Controllers
         /// <returns>Foo list data.</returns>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Produces("application/json")]
-        [HttpGet]
-        public async Task<ActionResult<string>> GetListAsync()
+        [HttpGet("{id}")]
+        public async Task<ActionResult<string>> GetListAsync(string id)
         {
-            var secret = _configuration["SQL-SA-PASSWORD"];
+            var secret = _configuration[id];
             return Ok(secret);
         }
 
