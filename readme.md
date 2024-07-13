@@ -112,9 +112,7 @@ Additionally, for the release pipeline to be able to register an API with Azure 
 * `LOCATION` - must match names of regions Azure can understand, e.g. `westeurope`. Translated to a shorthand when constructing resource group name (e.g. `we`).
 * `PROJECT_NAME` - a moniker of your choosing to denote the project. Used to construct resource group name.
 * `SQL_ADMIN_USERNAME` - administrator username of your choosing.
-* `SQL_ADMIN_PASSWORD` - administrator password of your choosing.
-* `SQL_USERS_GROUP_NAME` - group of users allowed to access the database.
-* `SUBSCRIPTION` - Azure subscription identifier.
+* `USERS_GROUP_NAME` - group of users allowed to access to Azure resources (Key Vault, database...).
 
 #### First deployment run
 
