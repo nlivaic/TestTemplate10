@@ -14,8 +14,12 @@ param ($resourceGroupName)
 ####################################################
 Write-Host "##[warning]--- Enable Entra-only auth for all SQL Servers in this Resource Group - START ---"
 $sqlServers = (az sql server list -g $resourceGroupName --query '[].name' --output tsv)
-foreach ($sqlServer in $sqlServers) {
-    az sql server ad-only-auth enable --resource-group $resourceGroupName --name $sqlServer
-    Write-Host "##[section]`tExisting Sql Server's $($sqlServer) Entra-only auth is enabled."
+foreach ($sqlServer in $sqlservers) {
+    $sqlServerAdmin = az sql server ad-admin list --resource-group $resourceGroupName --server-name $sqlServer --query '[].login' --output tsv
+    If ($sqlServerAdmin -ne $null) {
+        az sql server ad-only-auth enable --resource-group $resourceGroupName --name $sqlServer
+        Write-Host "##[section]`tExisting Sql Server's $($sqlServer) Entra-only auth is enabled."
+    }
+
 }
 Write-Host "##[warning]--- Enable Entra-only auth for all SQL Servers in this Resource Group - END ---" -ForegroundColor Yellow

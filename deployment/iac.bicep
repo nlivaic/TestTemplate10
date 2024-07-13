@@ -38,12 +38,9 @@ var service_bus_name = toLower('${baseName}${sb}1')
 var service_bus_RootManageSharedAccessKey_name = 'RootManageSharedAccessKey'
 var service_bus_ReadWritePolicy_name = 'ReadWritePolicy'
 
-var db_connection_string_env_var_name = 'TestTemplate10DbConnection'
 var auth_authority_env_var_name = 'AUTH__AUTHORITY'
 var auth_audience_env_var_name = 'AUTH__AUDIENCE'
 var auth_valid_issuer_env_var_name = 'AUTH__VALID_ISSUER'
-var applicationinsights_connection_string_env_var_name = 'APPLICATIONINSIGHTS_CONNECTION_STRING'
-var messageBroker_connectionStrings_env_var_name = 'MessageBroker'
 var vault_uri_env_var_name = 'KeyVault__Uri'
 
 resource sqlserver 'Microsoft.Sql/servers@2022-11-01-preview' = {
@@ -103,20 +100,14 @@ resource app_service_web 'Microsoft.Web/sites@2022-09-01' = {
   properties: {
     serverFarmId: app_service_plan.id
     siteConfig: {
-      connectionStrings: [
-        {
-          name: db_connection_string_env_var_name
-          connectionString: 'Server=tcp:${sqlserver.properties.fullyQualifiedDomainName},1433;Initial Catalog=${sqlserver::sqlDb.name};Persist Security Info=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;'
-          type: 'SQLAzure'
-        }
-        {
-          name: messageBroker_connectionStrings_env_var_name
-          connectionString: listKeys(
-            '${service_bus.id}/AuthorizationRules/${service_bus_ReadWritePolicy_name}',
-            service_bus.apiVersion).primaryConnectionString
-          type: 'Custom'
-        }
-      ]
+      // Kept this for future reference.
+      // connectionStrings: [
+      //   {
+      //     name: db_connection_string_env_var_name
+      //     connectionString: 'Server=tcp:${sqlserver.properties.fullyQualifiedDomainName},1433;Initial Catalog=${sqlserver::sqlDb.name};Persist Security Info=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;'
+      //     type: 'SQLAzure'
+      //   }
+      // ]
       linuxFxVersion: 'DOTNETCORE|6.0'
     }
   }
@@ -127,10 +118,6 @@ resource app_service_appsetting 'Microsoft.Web/sites/config@2022-09-01' = {
   name: 'web'
   properties: {
     appSettings: [
-      {
-          name: applicationinsights_connection_string_env_var_name
-          value: app_insights.properties.ConnectionString
-      }
       {
         name: auth_authority_env_var_name
         value: authAuthority
@@ -231,3 +218,5 @@ resource service_bus 'Microsoft.ServiceBus/namespaces@2021-06-01-preview' = {
 output sqlServerName string = sqlserver_name
 output appServiceWebName string = appService_web_name
 output dbConnection string = 'Server=tcp:${sqlserver.properties.fullyQualifiedDomainName},1433;Initial Catalog=${sqlserver::sqlDb.name};Persist Security Info=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;'
+output messageBrokerConnectionString string = listKeys('${service_bus.id}/AuthorizationRules/${service_bus_ReadWritePolicy_name}', service_bus.apiVersion).primaryConnectionString
+output appInsightsConnectionString string = app_insights.properties.ConnectionString

@@ -8,5 +8,9 @@ $sqlServerName = $jsonResultAll.properties.outputs.sqlServerName.value
 Write-Host "##vso[task.setvariable variable=appServiceWebName;isoutput=true]$appServiceWebName"
 Write-Host "##vso[task.setvariable variable=sqlServerName;isoutput=true]$sqlServerName"
 $dbConnection = $jsonResultAll.properties.outputs.dbConnection.value
+$messageBrokerConnectionString = $jsonResultAll.properties.outputs.messageBrokerConnectionString.value
+$appInsightsConnectionString = $jsonResultAll.properties.outputs.appInsightsConnectionString.value
 Write-Host "##vso[task.setvariable variable=dbConnection;isoutput=true]$dbConnection"
+Write-Host "##vso[task.setvariable variable=messageBrokerConnectionString;isoutput=true]$messageBrokerConnectionString"
+Write-Host "##vso[task.setvariable variable=appInsightsConnectionString;isoutput=true]$appInsightsConnectionString"
 Write-Host "##[warning]------ Create Resources END ------"
