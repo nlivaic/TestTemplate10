@@ -107,9 +107,9 @@ namespace TestTemplate10.Migrations
                 // Local database, populated from .env file.
                 if (args.Length == 0)
                 {
-                    connectionString = config["ConnectionStrings:TestTemplate10Db_Migrations_Connection"];
-                    dbUser = config["DB_USER"];
-                    dbPassword = config["DB_PASSWORD"];
+                    connectionString = config["TestTemplate10Db_Migrations_Connection"];
+                    dbUser = config["DbUser"];
+                    dbPassword = config["DbPassword"];
                 }
 
                 // Deployed database

@@ -10,16 +10,16 @@ Write-Output "If you want to edit a previously provided value, it is best to edi
 if (!(Test-Path ".env"))
 {
    New-Item -name ".env" -type "file" -value @"
-APPLICATIONINSIGHTS_CONNECTION_STRING=<applicationinsights_connection_string>
-ConnectionStrings__TestTemplate10DbConnection=Data Source=testtemplate10.sql;Initial Catalog=TestTemplate10Db
-ConnectionStrings__TestTemplate10Db_Migrations_Connection=Data Source=host.docker.internal,1433;Initial Catalog=TestTemplate10Db;Encrypt=False
-ConnectionStrings__MessageBroker=<msg_broker_connection_string>
-DB_USER=<db_user>
-DB_PASSWORD=<db_pw>
-DB_ADMIN_PASSWORD=<db_admin_pw>
-AUTH__AUTHORITY=https://login.microsoftonline.com/<auth_tenant_id>/v2.0
-AUTH__AUDIENCE=<auth_audience>
-AUTH__VALID_ISSUER=https://sts.windows.net/<auth_tenant_id>/
+ApplicationInsightsConnectionString=<applicationinsights_connection_string>
+TestTemplate10DbConnection=Data Source=testtemplate10.sql;Initial Catalog=TestTemplate10Db
+TestTemplate10Db_Migrations_Connection=Data Source=host.docker.internal,1433;Initial Catalog=TestTemplate10Db;Encrypt=False
+MessageBroker=<msg_broker_connection_string>
+DbUser=<db_user>
+DbPassword=<db_pw>
+DbAdminPassword=<db_admin_pw>
+AuthAuthority=https://login.microsoftonline.com/<auth_tenant_id>/v2.0
+AuthAudience=<auth_audience>
+AuthValidIssuer=https://sts.windows.net/<auth_tenant_id>/
 KeyVault__Uri=<keyvault_uri>
 "@
     Write-Host "Created new '.env' file."

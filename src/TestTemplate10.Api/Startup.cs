@@ -79,8 +79,8 @@ namespace TestTemplate10.Api
                 var sqlConnectionStringBuilder = new SqlConnectionStringBuilder(_configuration["TestTemplate10DbConnection"] ?? string.Empty);
                 if (_hostEnvironment.IsDevelopment())
                 {
-                    sqlConnectionStringBuilder.UserID = _configuration["DB_USER"] ?? string.Empty;
-                    sqlConnectionStringBuilder.Password = _configuration["DB_PASSWORD"] ?? string.Empty;
+                    sqlConnectionStringBuilder.UserID = _configuration["DbUser"] ?? string.Empty;
+                    sqlConnectionStringBuilder.Password = _configuration["DbPassword"] ?? string.Empty;
                 }
                 else
                 {
@@ -109,7 +109,7 @@ namespace TestTemplate10.Api
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddLoggingScopes();
-            if (!string.IsNullOrEmpty(_configuration["APPLICATIONINSIGHTS-CONNECTION-STRING"]))
+            if (!string.IsNullOrEmpty(_configuration["ApplicationInsightsConnectionString"]))
             {
                 services
                     .AddOpenTelemetry()
@@ -127,7 +127,7 @@ namespace TestTemplate10.Api
                             .AddSource("MassTransit")
                             .AddAzureMonitorTraceExporter(o =>
                             {
-                                o.ConnectionString = _configuration["APPLICATIONINSIGHTS-CONNECTION-STRING"];
+                                o.ConnectionString = _configuration["ApplicationInsightsConnectionString"];
                             });
                     })
                     // Not supported by Application Insights yet.

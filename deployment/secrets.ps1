@@ -6,11 +6,11 @@ param ($keyVaultName, $dbConnectionString, $messageBrokerConnectionString, $appI
 ################################################################
 ### Set Key Vault secrets to provided values.
 ################################################################
-$sqlSaPasswordSecretName = "SQL-SA-PASSWORD"
-$sqlAdminPasswordSecretName = "SQL-ADMIN-PASSWORD"
+$sqlSaPasswordSecretName = "SqlSaPassword"
+$sqlAdminPasswordSecretName = "SqlAdminPassword"
 $dbConnectionName = 'TestTemplate10DbConnection'
 $messageBrokerName = 'MessageBroker'
-$applicationInsightsConnectionName = 'APPLICATIONINSIGHTS-CONNECTION-STRING'
+$applicationInsightsConnectionName = 'ApplicationInsightsConnectionString'
 
 # We have to check whether all the relevant secrets are in there.
 # If not, generate those secrets and store in Key Vault.

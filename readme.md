@@ -52,11 +52,11 @@ Most of the stuff is in the `.env` file. This is a git ignored file, but it has 
 Database connection string for both `Api`, `WorkerServices` and `Migrations` projects is in the `.env` file. This was a deliberate choice, because I wanted the templated project to have a connection string automatically generated and in line with the name of the solution. You will notice there are two connection strings: `ConnectionStrings__TestTemplate10DbConnection` is used by `Api` and `WorkerServices`. `Migrations` has a separate one `ConnectionStrings__TestTemplate10Db_Migrations_Connection` because it is accessing the dockerized database from outside.
 
 Username and password for the database are provided as default values, but you can provide whatever values you want.
-Make sure you set the database-related variables (prefixed `DB_`) before you run the solution for the first time, otherwise the database will be configured with given administrator password and a username and password for the application user. If you don't change those values before running the solution you will have to delete the `testtemplate10.sql` container and accompanying volumes. If you change `DB_PASSWORD`, make sure the same value is set in `InitializeTestTemplate10Db.sql` for the login as well.
+Make sure you set the database-related variables (prefixed `DB_`) before you run the solution for the first time, otherwise the database will be configured with given administrator password and a username and password for the application user. If you don't change those values before running the solution you will have to delete the `testtemplate10.sql` container and accompanying volumes. If you change `DbPassword`, make sure the same value is set in `InitializeTestTemplate10Db.sql` for the login as well.
 
-When you first run the solution, an SQL script found in `src/InitializeTestTemplate10Db.sql` is executed, creating the database with an admin account (password in `DB_ADMIN_PASSWORD`), login and user (`DB_USER` and `DB_PASSWORD`). User is then assigned to read, write and DDL roles.
+When you first run the solution, an SQL script found in `src/InitializeTestTemplate10Db.sql` is executed, creating the database with an admin account (password in `DbAdminPassword`), login and user (`DbUser` and `DbPassword`). User is then assigned to read, write and DDL roles.
 
-Application is accessing the database as a `DB_USER`/`DB_PASSWORD`, with a generated connection string found in `ConnectionStrings__TestTemplate10DbConnection` and `ConnectionStrings__TestTemplate10Db_Migrations_Connection`.
+Application is accessing the database as a `DbUser`/`DbPassword`, with a generated connection string found in `ConnectionStrings__TestTemplate10DbConnection` and `ConnectionStrings__TestTemplate10Db_Migrations_Connection`.
 
 # Running The Application
 
@@ -68,7 +68,7 @@ At this point you have several things up and running:
 - Worker service (dockerized)
 - Empty Sql Server database with a volume (dockerized)
 
-Now it is time to create some tables in the database. From the root of your solution, first run `.\create_migration.ps1 '' '0001_Initial'` and then `./migrate.ps1`. Now you have to go to the SSMS and register your database server there. It is accessible on localhost, port 1433, with the username and password you set in your `.env` file under `DB_USER` and `DB_PASSWORD`.
+Now it is time to create some tables in the database. From the root of your solution, first run `.\create_migration.ps1 '' '0001_Initial'` and then `./migrate.ps1`. Now you have to go to the SSMS and register your database server there. It is accessible on localhost, port 1433, with the username and password you set in your `.env` file under `DbUser` and `DbPassword`.
 
 # Additional Stuff
 

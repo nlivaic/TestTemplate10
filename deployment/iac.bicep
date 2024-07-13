@@ -38,9 +38,9 @@ var service_bus_name = toLower('${baseName}${sb}1')
 var service_bus_RootManageSharedAccessKey_name = 'RootManageSharedAccessKey'
 var service_bus_ReadWritePolicy_name = 'ReadWritePolicy'
 
-var auth_authority_env_var_name = 'AUTH__AUTHORITY'
-var auth_audience_env_var_name = 'AUTH__AUDIENCE'
-var auth_valid_issuer_env_var_name = 'AUTH__VALID_ISSUER'
+var auth_authority_env_var_name = 'AuthAuthority'
+var auth_audience_env_var_name = 'AuthAudience'
+var auth_valid_issuer_env_var_name = 'AuthValidIssuer'
 var vault_uri_env_var_name = 'KeyVault__Uri'
 
 resource sqlserver 'Microsoft.Sql/servers@2022-11-01-preview' = {
