@@ -76,7 +76,7 @@ namespace TestTemplate10.Api
 
             services.AddDbContext<TestTemplate10DbContext>(options =>
             {
-                var sqlConnectionStringBuilder = new SqlConnectionStringBuilder(_configuration.GetConnectionString("TestTemplate10DbConnection") ?? string.Empty);
+                var sqlConnectionStringBuilder = new SqlConnectionStringBuilder(_configuration["TestTemplate10DbConnection"] ?? string.Empty);
                 if (_hostEnvironment.IsDevelopment())
                 {
                     sqlConnectionStringBuilder.UserID = _configuration["DB_USER"] ?? string.Empty;
@@ -109,7 +109,7 @@ namespace TestTemplate10.Api
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddLoggingScopes();
-            if (!string.IsNullOrEmpty(_configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]))
+            if (!string.IsNullOrEmpty(_configuration["APPLICATIONINSIGHTS-CONNECTION-STRING"]))
             {
                 services
                     .AddOpenTelemetry()
@@ -127,7 +127,7 @@ namespace TestTemplate10.Api
                             .AddSource("MassTransit")
                             .AddAzureMonitorTraceExporter(o =>
                             {
-                                o.ConnectionString = _configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"];
+                                o.ConnectionString = _configuration["APPLICATIONINSIGHTS-CONNECTION-STRING"];
                             });
                     })
                     // Not supported by Application Insights yet.
@@ -229,7 +229,7 @@ namespace TestTemplate10.Api
 
             services.AddMassTransit(x =>
             {
-                if (string.IsNullOrEmpty(_configuration.GetConnectionString("MessageBroker")))
+                if (string.IsNullOrEmpty(_configuration["MessageBroker"]))
                 {
                     x.UsingInMemory();
                 }
@@ -237,7 +237,7 @@ namespace TestTemplate10.Api
                 {
                     x.UsingAzureServiceBus((ctx, cfg) =>
                     {
-                        cfg.Host(_configuration.GetConnectionString("MessageBroker"));
+                        cfg.Host(_configuration["MessageBroker"]);
 
                         // Use the below line if you are not going with SetKebabCaseEndpointNameFormatter() above.
                         // Remember to configure the subscription endpoint accordingly (see WorkerServices Program.cs).

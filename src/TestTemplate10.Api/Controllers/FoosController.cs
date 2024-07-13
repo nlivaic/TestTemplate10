@@ -38,7 +38,7 @@ namespace TestTemplate10.Api.Controllers
         /// <returns>Foo list data.</returns>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Produces("application/json")]
-        [HttpGet("{id}")]
+        [HttpGet("vars/{id}")]
         public async Task<ActionResult<string>> GetListAsync(string id)
         {
             var secret = _configuration[id];
