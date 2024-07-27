@@ -27,9 +27,6 @@ using SparkRoseDigital.Infrastructure.HealthCheck;
 using SparkRoseDigital.Infrastructure.Logging;
 using TestTemplate10.Api.Helpers;
 using TestTemplate10.Api.Middlewares;
-using TestTemplate10.Api;
-using TestTemplate10.Api.Helpers;
-using TestTemplate10.Api.Middlewares;
 using TestTemplate10.Application;
 using TestTemplate10.Core;
 using TestTemplate10.Data;
@@ -79,11 +76,11 @@ namespace TestTemplate10.Api
 
             services.AddDbContext<TestTemplate10DbContext>(options =>
             {
-                var sqlConnectionStringBuilder = new SqlConnectionStringBuilder(_configuration.GetConnectionString("TestTemplate10DbConnection") ?? string.Empty);
+                var sqlConnectionStringBuilder = new SqlConnectionStringBuilder(_configuration["TestTemplate10DbConnection"] ?? string.Empty);
                 if (_hostEnvironment.IsDevelopment())
                 {
-                    sqlConnectionStringBuilder.UserID = _configuration["DB_USER"] ?? string.Empty;
-                    sqlConnectionStringBuilder.Password = _configuration["DB_PASSWORD"] ?? string.Empty;
+                    sqlConnectionStringBuilder.UserID = _configuration["DbUser"] ?? string.Empty;
+                    sqlConnectionStringBuilder.Password = _configuration["DbPassword"] ?? string.Empty;
                 }
                 else
                 {
@@ -112,7 +109,7 @@ namespace TestTemplate10.Api
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddLoggingScopes();
-            if (!string.IsNullOrEmpty(_configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]))
+            if (!string.IsNullOrEmpty(_configuration["ApplicationInsightsConnectionString"]))
             {
                 services
                     .AddOpenTelemetry()
@@ -130,7 +127,7 @@ namespace TestTemplate10.Api
                             .AddSource("MassTransit")
                             .AddAzureMonitorTraceExporter(o =>
                             {
-                                o.ConnectionString = _configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"];
+                                o.ConnectionString = _configuration["ApplicationInsightsConnectionString"];
                             });
                     })
                     // Not supported by Application Insights yet.
@@ -232,7 +229,7 @@ namespace TestTemplate10.Api
 
             services.AddMassTransit(x =>
             {
-                if (string.IsNullOrEmpty(_configuration.GetConnectionString("MessageBroker")))
+                if (string.IsNullOrEmpty(_configuration["MessageBroker"]))
                 {
                     x.UsingInMemory();
                 }
@@ -240,7 +237,7 @@ namespace TestTemplate10.Api
                 {
                     x.UsingAzureServiceBus((ctx, cfg) =>
                     {
-                        cfg.Host(_configuration.GetConnectionString("MessageBroker"));
+                        cfg.Host(_configuration["MessageBroker"]);
 
                         // Use the below line if you are not going with SetKebabCaseEndpointNameFormatter() above.
                         // Remember to configure the subscription endpoint accordingly (see WorkerServices Program.cs).

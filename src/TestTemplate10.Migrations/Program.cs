@@ -41,7 +41,7 @@ namespace TestTemplate10.Migrations
             var upgraderTestTemplate10 =
                 DeployChanges.To
                     .SqlDatabase(connectionStringBuilderTestTemplate10.ConnectionString)
-                    .WithVariable("SqlUsersGroupNameVariable", sqlUsersGroupName)
+                    .WithVariable("SqlUsersGroupNameVariable", sqlUsersGroupName)       // This is necessary to perform template variable replacement in the scripts.
                     .WithScriptsFromFileSystem(
                         !string.IsNullOrWhiteSpace(scriptsPath)
                                 ? Path.Combine(scriptsPath, "TestTemplate10Scripts")
@@ -107,12 +107,12 @@ namespace TestTemplate10.Migrations
                 // Local database, populated from .env file.
                 if (args.Length == 0)
                 {
-                    connectionString = config["ConnectionStrings:TestTemplate10Db_Migrations_Connection"];
-                    dbUser = config["DB_USER"];
-                    dbPassword = config["DB_PASSWORD"];
+                    connectionString = config["TestTemplate10Db_Migrations_Connection"];
+                    dbUser = config["DbUser"];
+                    dbPassword = config["DbPassword"];
                 }
 
-                // Remote database
+                // Deployed database
                 else if (args.Length == 5)
                 {
                     connectionString = args[0];

@@ -1,29 +1,48 @@
 using System;
 using System.Threading.Tasks;
 using AutoMapper;
+using AutoMapper.Configuration;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TestTemplate10.Api.Helpers;
 using TestTemplate10.Application.Questions.Commands;
 using TestTemplate10.Application.Questions.Queries;
+using TestTemplate10.Common.Interfaces;
 
 namespace TestTemplate10.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [AllowAnonymous]
     public class FoosController : ControllerBase
     {
         private readonly ISender _sender;
         private readonly IMapper _mapper;
+        private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration;
 
         public FoosController(
             ISender sender,
-            IMapper mapper)
+            IMapper mapper,
+            Microsoft.Extensions.Configuration.IConfiguration configuration
+            )
         {
             _sender = sender;
             _mapper = mapper;
+            _configuration = configuration;
+        }
+
+        /// <summary>
+        /// Get list of foos.
+        /// </summary>
+        /// <returns>Foo list data.</returns>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [Produces("application/json")]
+        [HttpGet("vars/{id}")]
+        public async Task<ActionResult<string>> GetListAsync(string id)
+        {
+            var secret = _configuration[id];
+            return Ok(secret);
         }
 
         /// <summary>
